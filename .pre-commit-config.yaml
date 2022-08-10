@@ -1,0 +1,77 @@
+repos:
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v3.2.0
+  hooks:
+  - id: trailing-whitespace
+    name: Trailing Space
+    entry: trailing-whitespace-fixer
+    language: python
+    types: [non-executable, file, text]
+    stages: [commit, merge-commit]
+  - id: end-of-file-fixer
+    name: End of Files
+    description: Ensures that a file is either empty, or ends with one newline.
+    entry: end-of-file-fixer
+    language: python
+    types: [non-executable, file, text]
+    stages: [commit, merge-commit]
+  - id: check-merge-conflict
+    name: Merge Conflicts
+    description: Check for files that contain merge conflict strings.
+    entry: check-merge-conflict
+    language: python
+    types: [non-executable, file, text]
+    stages: [commit, merge-commit]
+  - id: debug-statements
+    name: Debug Statements
+    description: Checks that debug statements (pdb, ipdb, pudb) are not imported on commit.
+    entry: debug-statement-hook
+    language: python
+    types: [python]
+    stages: [commit, merge-commit]
+  - id: check-yaml
+    name: Check YAML
+    description: Check YAML Syntax
+    entry: check-yaml
+    types: [yaml]
+    stages: [commit, merge-commit]
+- repo: local
+  hooks:
+  - id: isort
+    name: isort
+    description: A Python utility that sorts imports alphabetically
+    entry: isort
+    language: python
+    types: [python]
+    stages: [commit, merge-commit]
+  - id: flake8
+    name: Flake8
+    description: Python Style Guide Enforcement
+    entry: flake8
+    language: python
+    types: [python]
+    stages: [commit, merge-commit]
+  - id: black
+    name: Black
+    description: Uncompromising Python code formatter
+    entry: black
+    language: python
+    types: [python]
+    stages: [commit, merge-commit]
+  - id: codespell
+    name: Spelling
+    description: Checks for common misspellings in text files.
+    entry: codespell
+    language: python
+    types: [non-executable, file, text]
+    stages: [commit, merge-commit]
+# Tests
+  - id: pytest-app
+    name: pytest-app
+    description: Run pytests for app
+    entry: poetry run pytest
+    language: system
+    pass_filenames: false
+    always_run: true
+    types: [python]
+    stages: [push, merge-commit]
